@@ -1,52 +1,53 @@
-__author__ = 'olo & kryszak'
-import numpy as np
 import cv2
-from matplotlib import pyplot as plt
 
-fig = plt.figure()
+
+def create_detector():
+    detector_parameters = cv2.SimpleBlobDetector_Params()
+    detector_parameters.filterByConvexity = True
+    detector_parameters.minConvexity = 0.9
+    detector_parameters.filterByCircularity = 1
+    detector_parameters.minCircularity = 0.9
+    detector_parameters.maxThreshold = 100
+    detector_parameters.filterByInertia = 1
+    detector_parameters.minInertiaRatio = 0.6
+    detector_parameters.filterByArea = 1
+    detector_parameters.minArea = 200
+
+    return cv2.SimpleBlobDetector_create(detector_parameters)
+
+
+def process_frame(frame):
+    frame_in_grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    _, threshold_frame = cv2.threshold(
+        frame_in_grayscale, 100, 255, cv2.THRESH_BINARY)
+    return threshold_frame
+
 
 def main():
-    vc = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(0)
 
-    if vc.isOpened():
-        rval, frame = vc.read()
+    if video_capture.isOpened():
+        frame_available, frame = video_capture.read()
     else:
-        rval = False
+        frame_available = False
 
-    while rval:
+    detector = create_detector()
 
-        imageGrey = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-        _, thresh = cv2.threshold(imageGrey, 100,255, cv2.THRESH_BINARY)
+    while frame_available:
+        processed_frame = process_frame(frame)
+        keypoints = detector.detect(processed_frame)
+        cv2.putText(frame, str(len(keypoints)), (0, 150),
+                    cv2.FONT_HERSHEY_COMPLEX, 6, (0, 255, 0), 10)
 
-        params = cv2.SimpleBlobDetector_Params()
-
-        params.filterByConvexity = True
-        params.minConvexity = 0.9
-
-        filterByCircularity = 1
-        params.minCircularity = 0.9
-
-        params.maxThreshold = 100
-
-        params.filterByInertia = 1
-        params.minInertiaRatio = 0.6
-
-        params.filterByArea = 1
-        params.minArea = 200
-
-        detector = cv2.SimpleBlobDetector(params)
-        keypoints = detector.detect(thresh)
-        cv2.putText(frame, str(len(keypoints)), (0,150), cv2.FONT_HERSHEY_COMPLEX, 6, (0,255,0), 10)
-
-        cv2.imshow("Dice dot counter",frame)
-        rval, frame = vc.read()
+        cv2.imshow("Dice dot counter", frame)
+        frame_available, frame = video_capture.read()
 
         key = cv2.waitKey(20)
         if key == 27:
             break
 
     cv2.destroyWindow("preview")
-    vc.release()
-    np.set_printoptions(threshold='nan')
+    video_capture.release()
+
 
 main()

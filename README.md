@@ -3,3 +3,11 @@
 # DiceDotCounter
 Simple python script to detect number of dice dots shown to camera with OpenCV.
 
+# Development
+1. Activate virtual environment with
+`source ./venv.sh`
+2. Install required dependencies with
+`pip install -r requirements.txt`
+3. Run script with 
+`python main.py`
+
