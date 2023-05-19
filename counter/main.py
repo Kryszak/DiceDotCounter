@@ -5,7 +5,6 @@ def create_detector():
     detector_parameters = cv2.SimpleBlobDetector_Params()
     detector_parameters.filterByConvexity = True
     detector_parameters.minConvexity = 0.9
-    detector_parameters.filterByCircularity = 1
     detector_parameters.minCircularity = 0.9
     detector_parameters.maxThreshold = 100
     detector_parameters.filterByInertia = 1
@@ -23,6 +22,20 @@ def process_frame(frame):
     return threshold_frame
 
 
+def count_dice_dots(frame, detector):
+    keypoints = detector.detect(frame)
+    return len(keypoints)
+
+
+def draw_dot_count(dot_count, frame):
+    text_position = (0, 150)
+    text_color = (0, 255, 0)
+    font_scale = 6
+    cv2.putText(frame, str(dot_count), text_position,
+                cv2.FONT_HERSHEY_COMPLEX, font_scale,
+                text_color, cv2.LINE_AA)
+
+
 def main():
     video_capture = cv2.VideoCapture(0)
 
@@ -35,10 +48,8 @@ def main():
 
     while frame_available:
         processed_frame = process_frame(frame)
-        keypoints = detector.detect(processed_frame)
-        cv2.putText(frame, str(len(keypoints)), (0, 150),
-                    cv2.FONT_HERSHEY_COMPLEX, 6, (0, 255, 0), 10)
-
+        dot_count = count_dice_dots(processed_frame, detector)
+        draw_dot_count(dot_count, frame)
         cv2.imshow("Dice dot counter", frame)
         frame_available, frame = video_capture.read()
 
@@ -49,5 +60,5 @@ def main():
     cv2.destroyWindow("preview")
     video_capture.release()
 
-
-main()
+if __name__ == "__main__":
+    main()
