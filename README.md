@@ -10,5 +10,6 @@ Simple python script to detect number of dice dots shown to camera with OpenCV.
 2. Install required dependencies with
 `pip install -r requirements.txt`
 3. Run script with 
-`python main.py`
-
+`python counter/main.py`
+4. To run tests:
+`python -m unittest discover -s tests -p "*_test.py" -v`
