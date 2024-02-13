@@ -2,7 +2,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bd82336d23064d3899d8da5b3613769f)](https://app.codacy.com/gh/Kryszak/DiceDotCounter/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # DiceDotCounter
-Simple python script to detect number of dice dots shown to camera with OpenCV.
+Simple python script to detect number of dots on die shown to camera with OpenCV.
 
 # Development
 1. Activate virtual environment with
