@@ -6,6 +6,6 @@ numpy==2.2.4
 opencv-python==4.11.0.86
 packaging==24.2
 Pillow==11.1.0
-pyparsing==3.2.1
+pyparsing==3.2.3
 python-dateutil==2.9.0.post0
 six==1.17.0
