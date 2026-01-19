@@ -3,7 +3,7 @@ cycler==0.12.1
 fonttools==4.61.1
 kiwisolver==1.4.9
 numpy==2.2.4
-opencv-python==4.12.0.88
+opencv-python==4.13.0.90
 packaging==25.0
 Pillow==12.1.0
 pyparsing==3.3.1
