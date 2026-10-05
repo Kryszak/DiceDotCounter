@@ -1,6 +1,6 @@
 contourpy==1.4.0
 cycler==0.12.1
-fonttools==4.66.0
+fonttools==4.66.1
 kiwisolver==1.5.1
 numpy==2.5.3
 opencv-python==5.0.0.93
